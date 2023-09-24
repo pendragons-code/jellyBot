@@ -1,0 +1,11 @@
+{
+	"botConfig": {
+		"botID": "1154428607695949916",
+		"botOwnerID": "875324148874895400"
+	},
+	"defaults": {
+		"defaultPrefix": "jelly",
+		"defaultEmbedColor": "#0099ff",
+		"defaultFooterText": "Made with lack of intelligence by pendragonscode!"
+	}
+}

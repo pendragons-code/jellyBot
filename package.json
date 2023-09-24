@@ -1,0 +1,25 @@
+{
+  "name": "jellypan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/loaders/bot.js",
+  "scripts": {
+    "deploy": "pm2 start ecosystem.config.js --env production --watch",
+    "dev": "export NODE_ENV=dev && nodemon ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^8.6.0",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "os-utils": "^0.0.14",
+    "quick.db": "^9.1.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.49.0",
+    "nodemon": "^3.0.1"
+  },
+  "snyk": true
+}

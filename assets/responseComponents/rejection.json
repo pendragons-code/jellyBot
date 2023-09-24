@@ -1,0 +1,39 @@
+{
+	"userFault": {
+		"numbers": {
+			"invalid": "Invalid number provided!",
+			"missing": "You need to provide another number!",
+			"tooMany": "You have given too many numbers!",
+			"notInRange": "The number you provided is not in the accepted range!",
+			"intOnly": "You need to provided an integer!",
+			"decimalsOnly": "You need to provide a number that is not an integer!"
+		},
+		"mentions": {
+			"botMention": "You cannot mention the bot for this command!",
+			"selfMention": "You cannot mention yourself for this command!",
+			"invalid": "The mention you provided was invalid!",
+			"tooMany": "You provided too many mentions!",
+			"missing": "You need to provide mentions!"
+		},
+		"args": {
+			"invalid": "You provided invalid arguments!",
+			"tooMany": "You have too many arguments!",
+			"missing": "You need to provide arguments!"
+		},
+		"privilege": {
+			"botTooLow": "My permissions are not ranked high enough to perform this command!",
+			"disabledCommand": "The command is disabled and you cannot run it!",
+			"blackListedUser": "You are blacklisted from this discord bot, and you cannot run any commands!",
+			"missingPermissions": "You do not have the needed permissions to run this command!",
+			"creatorOnly": "This command cannot be run by anyone, except the creator."
+		}
+	},
+	"weAreScrewed": {
+		"badApiResponse": "The service you requested for gave us an invalid response, please try again later.",
+		"executionError": "Something went wrong! Please inform the developers if the issue(s) persists!"
+	},
+	"botDownTime": {
+		"editMode": "We are making changes the bot! Please be patient! Thank you!",
+		"maintenance": "The bot is not up due maintenance! I apologize for the problems(s) this may cause!"
+	}
+}
