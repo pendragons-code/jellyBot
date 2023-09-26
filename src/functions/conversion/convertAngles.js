@@ -26,7 +26,7 @@ function convertAngles(queriedAmt, unit) {
 	let milliradian = (unit == "milliradian") ? queriedAmt : radian * 1000
 	let minuteOfArc = (unit == "arcminute") ? queriedAmt : degree * 60
 	let secondOfArc = (unit == "arcsecond") ? queriedAmt : degree * 3600
-	return `radian: ${radian.toPrecision(5)}\ngradian: ${gradian.toPrecision(5)}\nmilliradian: ${milliradian.toPrecision(5)}\nminute of arc: ${minuteOfArc.toPrecision(5)}\nsecondOfArc: ${secondOfArc.toPrecision(5)}`
+	return `radian: ${radian.toPrecision(5)}\ngradian: ${gradian.toPrecision(5)}\nmilliradian: ${milliradian.toPrecision(5)}\narc minutes: ${minuteOfArc.toPrecision(5)}\narc seconds: ${secondOfArc.toPrecision(5)}`
 }
 
 module.exports = { convertAngles }
