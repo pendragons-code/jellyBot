@@ -1,15 +1,15 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require("discord.js")
 const { convertAngles } = require("../../../functions/conversion/convertAngles.js")
 const { defaults } = require("../../../../config.json")
-const reject = require("../../../../assets/responseComponents/rejection.json")
 module.exports = {
 	name: "angles",
-	category: "angles",
-	description: "Converts angles to a list of common values.",
+	category: "conversion",
+	description: "Converts angles to a list of common units.",
+	utilisation: "angles <value> <unit>",
 	options: [
 		{
 			name: "value",
-			description: "The angle value.",
+			description: "The angle's value.",
 			type: ApplicationCommandOptionType.Number,
 			required: true
 		},
