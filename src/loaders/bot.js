@@ -27,6 +27,7 @@ global.bot = new Client({
 require("../functions/currentDateTime.js")
 require("./database.js")
 require("./slashCommands.js")
+require("./messageCommands.js")
 require("./events.js")
 require("./utils.js")
 console.log(`PID: ${process.pid}`)
