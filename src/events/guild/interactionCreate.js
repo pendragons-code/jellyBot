@@ -15,10 +15,10 @@ module.exports = async (bot, interactionCreate) => {
 			errorEmbed.setTitle("Error!")
 			for(let i = 0; i < slashCmd.minPerms.length; ++i) {
 				if(!interactionCreate.member.permissions.has(slashCmd.minPerms[i])) {
-					if(!Array.isArray(cmd.minPerms[i])) return interactionCreate.reply(`${reject.userFault.privilege.missingPermissions} ${permissionsList[cmd.minPerms[i]]}`)
+					if(!Array.isArray(slashCmd.minPerms[i])) return interactionCreate.reply(`${reject.userFault.privilege.missingPermissions} ${permissionList[slashCmd.minPerms[i]]}`)
 					let missingPermissionsName = ""
-					for(let perArray = 0; perArray < cmd.minPerms[i].length; ++perArray) {
-						let missingPermissionsNameFromArray = permissionList[cmd.minPerms[i][perArray]]
+					for(let perArray = 0; perArray < slashCmd.minPerms[i].length; ++perArray) {
+						let missingPermissionsNameFromArray = permissionList[slashCmd.minPerms[i][perArray]]
 						missingPermissionsName + `\`${missingPermissionsNameFromArray}\`, `
 					}
 				}
@@ -28,17 +28,13 @@ module.exports = async (bot, interactionCreate) => {
 		try {
 			const commandDisable = await db.get(`disabledCommand_${interactionCreate.guild.id}_${slashCmd.name}`)
 			const categoryDisable = await db.get(`disabledCategory_${interactionCreate.guild.id}_${slashCmd.category}`)
-			if(commandDisable == "disabled" || categoryDisable == "disabled") return interactionCreate.reply(reject.userFault.privilege.blackListedUser)
+			if(commandDisable == "disabled" || categoryDisable == "disabled") return interactionCreate.reply(reject.userFault.privilege.disabledCommand)
 			if(slashCmd.category === "creator" && interactionCreate.user.id !== botConfig.botOwnerID) return interactionCreate.reply("You are not allowed to use this command!")
 			slashCmd.execute(interactionCreate)
 			await db.add(`cmdsRan_${interactionCreate.user.id}`, 1)
-			.catch((error) => {
-				console.error(error)
-				return interactionCreate.reply(reject.weAreScrewed.executionError)
-			})
 
 		} catch(error) {
-			console.error(`${currentDateTime()} [jelly bot service]: ERROR`)
+			console.error(`${currentDateTime()} [jelly bot service] [slashCommands runtime]: ERROR`)
 			console.error(error)
 			return interactionCreate.reply(reject.weAreScrewed.executionError)
 		}

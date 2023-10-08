@@ -2,7 +2,7 @@
 	"userFault": {
 		"numbers": {
 			"invalid": "Invalid number provided!",
-			"missing": "You need to provide another number!",
+			"missing": "You need to provide a number!",
 			"tooMany": "You have given too many numbers!",
 			"notInRange": "The number you provided is not in the accepted range!",
 			"intOnly": "You need to provided an integer!",

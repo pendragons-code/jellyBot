@@ -10,7 +10,7 @@ module.exports = {
 		if(args.slice(1).join(" ").length > 2000) return messageCreate.channel.send("The character limit is 2000, try breaking the thing into chunks for me! Thank you!")
 		let acceptedArgs = ["help", "sqrt", "cubert", "fourthrt", "^x", "!^x", "fractions"]
 		// if i wanna do more than 1 paradigm at once, remember to do !^x before ^x
-		if(!acceptedArgs.includes(args[0])) return messageCreate.channel.send(reject.UserFault.args.invalid)
+		if(!acceptedArgs.includes(args[0])) return messageCreate.channel.send(reject.userFault.args.invalid)
 		// there are a few ways to do this, i can stack .replaceAlls and that would probably work ngl
 		switch(args[0]) {
 			case "help":
