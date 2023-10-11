@@ -22,15 +22,15 @@ module.exports = async (bot, messageCreate) => {
 	if(cmd.minPerms) {
 		if(cmd.maxArgs && args[cmd.maxArgs]) return messageCreate.channel.send(reject.userFault.args.tooMany)
 		for(let i = 0; i < cmd.minPerms.length; ++i) {
-			if(!messageCreate.members.permissions.has(cmd.minPerms[i])) {
+			let missingPermissionsName = ""
+			if(!messageCreate.member.permissions.has(cmd.minPerms[i])) {
 				if(!Array.isArray(cmd.minPerms[i])) return messageCreate.channel.send(`${reject.userFault.privilege.missingPermissions} ${permissionList[cmd.minPerms[i]]}`)
-				let missingPermissionsName = ""
 				for(let perArray = 0; perArray < cmd.minPerms[i].length; ++perArray) {
 					let missingPermissionsNameFromArray = permissionList[cmd.minPerms[i][perArray]]
 					missingPermissionsName + `\`${missingPermissionsNameFromArray}\`,`
 				}
+				return messageCreate.channel.send(`${reject.userFault.privilege.missingPermissions} ${missingPermissionsName.slice(0, missingPermissionsName.length - 2)}`)
 			}
-			return messageCreate.channel.send(`${reject.userFault.privilege.missingPermissions} ${missingPermissionsName.slice(0, missingPermissionsName.length - 2)}`)
 		}
 	}
 	try {

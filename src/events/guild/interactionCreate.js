@@ -14,15 +14,16 @@ module.exports = async (bot, interactionCreate) => {
 			let errorEmbed = new EmbedBuilder()
 			errorEmbed.setTitle("Error!")
 			for(let i = 0; i < slashCmd.minPerms.length; ++i) {
+				let missingPermissionsName = ""
 				if(!interactionCreate.member.permissions.has(slashCmd.minPerms[i])) {
 					if(!Array.isArray(slashCmd.minPerms[i])) return interactionCreate.reply(`${reject.userFault.privilege.missingPermissions} ${permissionList[slashCmd.minPerms[i]]}`)
-					let missingPermissionsName = ""
 					for(let perArray = 0; perArray < slashCmd.minPerms[i].length; ++perArray) {
 						let missingPermissionsNameFromArray = permissionList[slashCmd.minPerms[i][perArray]]
 						missingPermissionsName + `\`${missingPermissionsNameFromArray}\`, `
 					}
+					return interactionCreate.reply(`${reject.userFault.privilege.missingPermissions} ${missingPermissionsName.slice(0, missingPermissionsName.length - 2)}`)
 				}
-				return interactionCreate.reply(`${reject.userFault.privilege.missingPermissions} ${missingPermissionsName.slice(0, missingPermissionsName.length - 2)}`)
+
 			}
 		}
 		try {
@@ -42,7 +43,7 @@ module.exports = async (bot, interactionCreate) => {
 			let ButtonID = await JSON.parse(interactionCreate.customId)
 			let ButtonFile = await ButtonID.ffb
 			if(!ButtonFile) return
-			delete require.cache[require.resolve(`../../buttons/${ByttonFile}.js`)]
+			delete require.cache[require.resolve(`../../buttons/${ButtonFile}.js`)]
 			const button = require(`../../buttons/${ButtonFile}.js`)
 			if(button) return button({ interactionCreate, ButtonID })
 		}
