@@ -1,5 +1,5 @@
 module.exports = {
-	app: [
+	apps: [
 		{
 			name: "jellypan",
 			script: "./src/loaders/bot.js",
