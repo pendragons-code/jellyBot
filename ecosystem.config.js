@@ -9,6 +9,7 @@ module.exports = {
 			env_development: {
 				NODE_ENV: "development"
 			},
+			watch: true,
 			watch_delay: 1000,
 			ignore_watch: ["node_modules"],
 			max_memory_restart: "1G",
