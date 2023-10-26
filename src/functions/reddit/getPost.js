@@ -1,4 +1,7 @@
 const axios = require("axios")
+/**
+ * @param {string} subreddit - The name of the subreddit, without the usage of r/
+ */
 async function getRedditPost(subreddit) {
 	let getRedditPostUrl = {
 		method: "GET",
