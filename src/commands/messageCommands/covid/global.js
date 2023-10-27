@@ -5,7 +5,7 @@ const { defaults } = require("../../../../config.json")
 module.exports = {
 	name: "global",
 	aliases: [],
-	category: "utility",
+	category: "covid",
 	utilisation: "global",
 	desc: "Shows global statistics for covid from the novelcovid api!",
 	async execute(messageCreate, args, prefix) {

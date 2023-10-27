@@ -1,5 +1,5 @@
 const { defaults } = require("../../../../config.json")
-const { getRedditPost } = require("../../../functions/reddit.js")
+const { getRedditPost } = require("../../../functions/reddit/getPost.js")
 const { sfwRedditCheck } = require("../../../functions/reddit/checkSfw.js")
 const { EmbedBuilder } = require("discord.js")
 module.exports = {
@@ -17,11 +17,11 @@ module.exports = {
 		let redditPostEmbed = new EmbedBuilder()
 		redditPostEmbed.setTitle(postData.title)
 		redditPostEmbed.setURL(`https://reddit.com/${postData.permalink}`)
-		redditPostEmbed.setDescription(`👍 ${postData.ups} | 👎 ${postData.downs} | 💬 ${postData.comments}`)
+		redditPostEmbed.setDescription(`👍 ${postData.ups} | 👎 ${postData.downs} | 💬 ${postData.num_comments}`)
 		redditPostEmbed.setColor(defaults.defaultEmbedColor)
 		redditPostEmbed.setFooter({ text: defaults.defaultFooterText })
 		redditPostEmbed.setTimestamp()
-		if(postData.url)redditEmbed.setImage(postData.url)
+		if(postData.url)redditPostEmbed.setImage(postData.url)
 		messageCreate.channel.send({ embeds: [redditPostEmbed] })
 	}
 }

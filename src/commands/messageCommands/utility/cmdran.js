@@ -19,7 +19,7 @@ module.exports = {
 		cmdRanEmbed.setDescription(`${user.username} ran ${cmdRanData} commands!`)
 		cmdRanEmbed.setTimestamp()
 		cmdRanEmbed.setFooter({ text: defaults.defaultFooterText })
-		cmdRanData.setColor(defaults.defaultEmbedColor)
+		cmdRanEmbed.setColor(defaults.defaultEmbedColor)
 		return messageCreate.channel.send({ embeds: [cmdRanEmbed] })
 	}
 }
