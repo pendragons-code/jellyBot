@@ -14,6 +14,7 @@
     "better-sqlite3": "^8.6.0",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
+    "novelcovid": "^3.0.2",
     "os-utils": "^0.0.14",
     "quick.db": "^9.1.7"
   },
