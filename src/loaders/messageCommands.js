@@ -8,7 +8,7 @@ for(dirs of messageCommandDirs) {
 	for(file of perMessageCommandFile) {
 		const command = require(`../commands/messageCommands/${dirs}/${file}`)
 		bot.messageCommands.set(command.name.toLowerCase(), command)
-		console.log(`${currentDateTime()} [MessageCommands Loaded]`)
+		console.log(`${currentDateTime()} [MessageCommands Loaded]: ${file} from ${dirs}!`)
 		delete require.cache[require.resolve(`../commands/messageCommands/${dirs}/${file}`)]
 	}
 }
