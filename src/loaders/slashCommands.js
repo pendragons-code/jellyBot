@@ -21,6 +21,6 @@ bot.on("ready", (bot) => {
 })
 
 console.log(`${currentDateTime()} [SlashCommands Service]: Done loading!`)
-db.set(`slashCommandsAllCommands`, Array.from(bot.slashCommands.filter(x => x.name).keys()))
-console.log(Array.from(bot.slashCommands.filter(x => x.name).keys()))
-console.log(`${currentDateTime()} [DB Service]: Done loading commands into database! `)
+//db.set(`slashCommandsAllCommands`, Array.from(bot.slashCommands.filter(x => x.name).keys()))
+//console.log(Array.from(bot.slashCommands.filter(x => x.name).keys()))
+//console.log(`${currentDateTime()} [DB Service]: Done loading commands into database! `)
