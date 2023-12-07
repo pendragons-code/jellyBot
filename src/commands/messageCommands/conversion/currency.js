@@ -25,7 +25,7 @@ module.exports = {
 			},
 			headers: {
 				"x-rapidapi-host": "currency-exchange.p.rapidapi.com",
-				"x-rapidapi-key": currencyApiKey	
+				"x-rapidapi-key": currencyApiKey
 			}
 		}
 		let response = await axios(options)

@@ -16,7 +16,7 @@ module.exports = {
 		}
 	],
 	async execute(interactionCreate) {
-		let rawSubreddit = interactionCreate.options._hoistedOptions[0]
+		let rawSubreddit = interactionCreate.options._hoistedOptions[0].value
 		let subreddit = rawSubreddit.replace("r/", "")
 		if(sfwRedditCheck(subreddit) === "nsfw") return interactionCreate.reply("The subreddit you requested is marked NSFW.")
 		

@@ -16,7 +16,7 @@ module.exports = {
 		}
 	],
 	async execute(interactionCreate) {
-		let countryFromUser = interactionCreate.options._hoistedOptions[0]
+		let countryFromUser = interactionCreate.options._hoistedOptions[0].value
 		let countryData = await covidApi.countries({ country: countryFromUser })
 		if(!countryData) return interactionCreate.reply(reject.weAreScrewed.executionError)
 		if(countryData.message) return interactionCreate.reply(reject.userFault.args.invalid)
