@@ -1,7 +1,6 @@
 const { EmbedBuilder } = require("discord.js")
 const { getUserFromMention } = require("../../../functions/mentions/user.js")
 const { defaults } = require("../../../../config.json")
-const reject = require("../../../../config.json")
 
 module.exports = {
 	name: "cmdran",

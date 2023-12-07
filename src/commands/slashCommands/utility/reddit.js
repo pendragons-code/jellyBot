@@ -1,18 +1,25 @@
 const { defaults } = require("../../../../config.json")
 const { getRedditPost } = require("../../../functions/reddit/getPost.js")
 const { sfwRedditCheck } = require("../../../functions/reddit/checkSfw.js")
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js")
 module.exports = {
 	name: "reddit",
-	aliases: [],
 	category: "utility",
-	utilisation: "reddit <subreddit>",
-	desc: "Extracts a random post from mentioned subreddit, it would reject nsfw subreddits.",
-	maxArgs: 1,
-	async execute(messageCreate, args, prefix) {
-		if(!args[0]) return messageCreate.channel.send(reject.userFault.args.missing)
-		let subreddit = args[0].replace("r/", "")
-		if(sfwRedditCheck(subreddit) === "nsfw") return messageCreate.channel.send("The subreddit you requested is marked NSFW!")
+	description: "",
+	utilisation: "Extracts a random post from mentioned subreddit, it would reject nsfw subreddits.",
+	options: [
+		{
+			name: "subreddit",
+			description: "Returns results for this subreddit!",
+			type: ApplicationCommandOptionType.String,
+			required: true
+		}
+	],
+	async execute(interactionCreate) {
+		let rawSubreddit = interactionCreate.options._hoistedOptions[0]
+		let subreddit = rawSubreddit.replace("r/", "")
+		if(sfwRedditCheck(subreddit) === "nsfw") return interactionCreate.reply("The subreddit you requested is marked NSFW.")
+		
 		let postData = await getRedditPost(subreddit)
 		let redditPostEmbed = new EmbedBuilder()
 		redditPostEmbed.setTitle(postData.title)
@@ -22,6 +29,7 @@ module.exports = {
 		redditPostEmbed.setFooter({ text: defaults.defaultFooterText })
 		redditPostEmbed.setTimestamp()
 		if(postData.url)redditPostEmbed.setImage(postData.url)
-		messageCreate.channel.send({ embeds: [redditPostEmbed] })
+		interactionCreate.reply({ embeds: [redditPostEmbed] })
+
 	}
 }

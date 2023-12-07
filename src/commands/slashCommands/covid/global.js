@@ -1,15 +1,13 @@
-const covidApi = require("novelcovid")
-const reject = require("../../../../assets/responseComponents/rejection.json")
 const { EmbedBuilder } = require("discord.js")
 const { defaults } = require("../../../../config.json")
+const reject = require("../../../../assets/responseComponents/rejection.json")
 module.exports = {
 	name: "global",
-	aliases: [],
 	category: "covid",
 	utilisation: "global",
-	desc: "Shows global statistics for covid from the novelcovid api!",
-	async execute(messageCreate, args, prefix) {
-		try{
+	description: "Shows global statistics for covid from the novelcovid api!",
+	async execute(interactionCreate) {
+		try {
 			const data = await covidApi.all()
 			const globalCovidApi = new EmbedBuilder()
 			globalCovidApi.setColor(defaults.defaultEmbedColor)
@@ -23,9 +21,9 @@ module.exports = {
 			globalCovidApi.addFields({ name: "Deaths", value: data.deaths })
 			globalCovidApi.addFields({ name: "Recovered", value: data.recovered })
 
-			return messageCreate.channel.send({ embeds: [globalCovidApi] })
-		} catch(e) {
-			return messageCreate.channel.send(reject.weAreScrewed.badApiResponse)
+			return interactionCreate.reply({ embeds: [globalCovidApi] })
+		}catch(e){
+			return interactionCreate.reply(reject.weAreScrewed.badApiResponse)
 		}
 	}
 }
