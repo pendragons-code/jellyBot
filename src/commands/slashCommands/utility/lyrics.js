@@ -1,17 +1,25 @@
-const { EmbedBuilder } = require("discord.js")
+const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js")
 const { defaults } = require("../../../../config.json")
 const axios = require("axios")
 const reject = require("../../../../assets/responseComponents/rejection.json")
 module.exports = {
 	name: "lyrics",
-	aliases: [],
-	category: "utility",
-	utilisation: "lyrics <here> <query>",
-	desc: "Sends the lyrics or link in the current channel!",
-	async execute(messageCreate, args, prefix) {
+	category: "core",
+	description: "Sends the lyrics or link in the current channel!",
+	utilisation: "lyrics <song name>",
+	options: [
+		{
+			name: "name",
+			description: "Song name for query.",
+			type: ApplicationCommandOptionType.String,
+			required: true
+		}
+	],
+	async execute(interactionCreate) {
+		let songName = interactionCreate.options._hoistedOptions[0].value
 		let results = await axios({
 			method: "get",
-			url: `https://some-random-api.ml/lyrics/title?=${args.join("%20")}`,
+			url: `https://some-random-api.ml/lyrics/title?=${songName}`,
 			headers: {
 				"Content-Type": "application/json",
 				"Accept-Encoding": "gzip,deflate,compress"
@@ -27,9 +35,9 @@ module.exports = {
 		musicLyricsEmbed.setDescription(results.data.lyrics)
 		musicLyricsEmbed.setImage(results.data.thumbnail.genius)
 		musicLyricsEmbed.setTitle(`Results for ${results.data.title}`)
-		messageCreate.channel.send({ embeds: [musicLyricsEmbed] }).catch(() => {
-			messageCreate.channel.send("Too many characters, sending link instead!")
-			messageCreate.channel.send(`🔗 ${results.data.link.genius}`)
+		interactionCreate.reply({ embeds: [musicLyricsEmbed] }).catch(() => {
+			interactionCreate.reply("Too many characters, sending link instead!")
+			interactionCreate.reply(`🔗 ${results.data.link.genius}`)
 		})
 	}
 }
