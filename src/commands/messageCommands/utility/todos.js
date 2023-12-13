@@ -57,7 +57,15 @@ module.exports = {
 				if(requestedTaskForRemoval < 0) return messageCreate.channel.send("You cannot have that as an assigned tasked number.")
 				let taskToPull = todosDB[requestedTaskForRemoval]
 				await db.pull(`todos_${messageCreate.author.id}`, taskToPull)
-				return messageCreate.channel.send(`**Task ${args[1]}** has been removed!`)
+					.catch((error) => {
+						console.log(error)
+						console.error(`[${currentDateTime}] error`)
+						console.error(`[${currentDateTime}] ${messageCreate.content}`)
+						return messageCreate.channel.send(reject.weAreScrewed.executionError)
+					})
+					.then(() => {
+						messageCreate.channel.send(`**Task ${args[1]}** has been removed!`)
+					})
 				break;
 			case "set":
 				if(!args[2]) return messageCreate.channel.send(reject.userFault.args.missing)
@@ -69,8 +77,18 @@ module.exports = {
 				if(newTask.length > 130) return messageCreate.channel.send("The task that you wanna set is too long.")
 				await todosDB.splice(specifiedTaskToSet, 1, newTask)
 				await db.set(`todos_${messageCreate.author.id}`, todosDB)
-				return messageCreate.channel.send(`Updated ${args[0]} to **${todosDB[specifiedTaskToSet]}**!`)
+					.catch((error) => {
+						console.log(error)
+						console.error(`[${currentDateTime}] error`)
+						console.error(`[${currentDateTime}] ${messageCreate.content}`)
+						return messageCreate.channel.send(reject.weAreScrewed.executionError)
+					})
+					.then(() => {
+						messageCreate.channel.send(`Updated ${args[0]} to **${todosDB[specifiedTaskToSet]}**!`)
+					})
 				break;
+			default:
+				return messageCreate.channel.send(reject.userFault.args.invalid)
 		}
 
 
