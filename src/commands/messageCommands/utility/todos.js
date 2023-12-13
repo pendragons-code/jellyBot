@@ -1,4 +1,3 @@
-const { db } = require("quick.db")
 const { EmbedBuilder } = require("discord.js")
 const { defaults } = require("../../../../config.json")
 const reject = require("../../../../assets/responseComponents/rejection.json")
@@ -22,19 +21,22 @@ module.exports = {
 		switch(args[0]) {
 			case "show":
 				if(numberOfTodos < 1) return messageCreate.channel.send("You do not have any tasks to show!")
-				if(isNaN(args[1])) return messageCreate.channel.send(reject.userFault.numbers.missing)
+				if(isNaN(args[1]) && args[1] !== "all") return messageCreate.channel.send(reject.userFault.numbers.missing)
 				let pageNumber = parseInt(args[1])
-				let numberOfPagesFromDB = parseInt(math.ceil(numberOfTodos / 30)) // If I have one task, i will still get one page
+				if(args[1] === "all") pageNumber = 1
+				let numberOfPagesFromDB = parseInt(Math.ceil(numberOfTodos / 30)) // If I have one task, i will still get one page
 				if(pageNumber > numberOfPagesFromDB) return messageCreate.channel.send("You do not have that many pages.")
-				let description = todosDB.slice((pageNumber * 30) - 1, 30).map((taskString, taskNumberIndex) => {
-					`[${taskNumberIndex + 1} ${taskString}]`
-				})
-				todoEmbed.setDescription(description)
+				let description = ""
+				for(let i = (pageNumber - 1) * 30; i < (pageNumber * 30); ++i) {
+					if(!todosDB[i]) continue
+					description += `[${i+1}] ${todosDB[i]}\n`
+				}
+				todoEmbed.setDescription("```" + description + "```")
 				messageCreate.channel.send({ embeds: [todoEmbed] })
 				break;
 			case "add":
 				if(!args[1]) return messageCreate.channel.send(reject.userFault.args.missing)
-				let taskToAdd = args.join(" ").shift()
+				let taskToAdd = args.slice(1).join(" ")
 				if(taskToAdd.length > 130) return messageCreate.channel.send("The task you want to add is too long!")
 				await db.push(`todos_${messageCreate.author.id}`, taskToAdd)
 					.catch((error) => {
@@ -50,14 +52,24 @@ module.exports = {
 			case "remove":
 				if(isNaN(args[1])) return messageCreate.channel.send(reject.userFault.numbers.invalid)
 				if(todosDB === null) return messageCreate.channel.send("You do not have any tasks.") // we need to have this here as interacting with this in a null state would make it throw an error and cause the runtime to crash.
-				let requestedTaskForRemoval = parseInt(args[1])
+				let requestedTaskForRemoval = parseInt(args[1] - 1)
 				if(requestedTaskForRemoval > todosDB.length) return messageCreate.channel.send("You do not have that many tasks.")
-				if(requestedTaskForRemoval < 1) return messageCreate.channel.send("You cannot have that as an assigned tasked number.")
-				await db.pull(`todos_${messageCreate.author.id}`)
+				if(requestedTaskForRemoval < 0) return messageCreate.channel.send("You cannot have that as an assigned tasked number.")
+				let taskToPull = todosDB[requestedTaskForRemoval]
+				await db.pull(`todos_${messageCreate.author.id}`, taskToPull)
+				return messageCreate.channel.send(`**Task ${args[1]}** has been removed!`)
 				break;
 			case "set":
 				if(!args[2]) return messageCreate.channel.send(reject.userFault.args.missing)
 				if(isNaN(args[1])) return messageCreate.channel.send(reject.userFault.numbers.invalid)
+				if(numberOfTodos === null || numberOfTodos < 1) return messageCreate.channel.send("You do not have any tasks.")
+				let specifiedTaskToSet = parseInt(args[1] - 1)
+				if(specifiedTaskToSet > numberOfTodos || specifiedTaskToSet < 0) return messageCreate.channel.send(reject.userFault.numbers.invalid)
+				let newTask = args.slice(2).join(" ")
+				if(newTask.length > 130) return messageCreate.channel.send("The task that you wanna set is too long.")
+				await todosDB.splice(specifiedTaskToSet, 1, newTask)
+				await db.set(`todos_${messageCreate.author.id}`, todosDB)
+				return messageCreate.channel.send(`Updated ${args[0]} to **${todosDB[specifiedTaskToSet]}**!`)
 				break;
 		}
 

@@ -5,7 +5,7 @@ const { EmbedBuilder, ApplicationCommandOptionType } = require("discord.js")
 module.exports = {
 	name: "reddit",
 	category: "utility",
-	description: "",
+	description: "A command that scrapes reddit posts!",
 	utilisation: "Extracts a random post from mentioned subreddit, it would reject nsfw subreddits.",
 	options: [
 		{
