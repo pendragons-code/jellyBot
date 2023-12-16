@@ -6,7 +6,7 @@ module.exports = {
 	aliases: [],
 	category: "utility",
 	desc: "A command that helps you manage your ToDo list.",
-	utilisation: "todo add <task>\ntodo remove <task number>\ntodo set <task number> <task>\ntodo reset all\ntodo show <page number>",
+	utilisation: "todo add <task>\ntodo remove <task number>\ntodo set <task number> <task>\ntodo reset all\ntodo show <page number>\nNote that users with `MANAGER_SERVER` permissions can bypass this!",
 	async execute(messageCreate, args, prefix) {
 		if(!args[1]) return messageCreate.channel.send(reject.userFault.args.missing)
 		const todoEmbed = new EmbedBuilder()

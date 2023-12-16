@@ -8,4 +8,4 @@ async function getChannelFromMention(mentionedChannel) {
 	return messageCreate.guild.channel.cache.get(mention)
 }
 
-module.exports = { getChannelFromMention 
+module.exports = { getChannelFromMention }
