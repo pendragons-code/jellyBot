@@ -13,4 +13,7 @@
 	[.] start small i guess
 ```
 # Commands
-[.] more features
+```
+[.] basic moderation -> warn, kick, ban, mute, tempban, clear, unwarn, tempmute, unban, serverdetails, slowmode, unmute, reactionroles
+[.] slashCommand utilities will probably have to stay behind a bit, this is due to the limitations of time primarily
+```
