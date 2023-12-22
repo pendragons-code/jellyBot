@@ -2,9 +2,9 @@ const { defaults, botConfig } = require("../../../config.json")
 require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
 const reject = require("../../../assets/responseComponents/rejection.json")
 const permissionList = require("../../../assets/permissionsList.json")
-const ms = require("parse-ms")
 
 module.exports = async (bot, messageCreate) => {
+	const ms = await import("parse-ms")
 	if(messageCreate.content.includes(process.env.token)) bot.utils.get("tokensecurity").execute(messageCreate)
 	// the reason why im putting ignore bots and dms only after tokens is due to the fact that tokens sent in dms would not get picked up and i want to be alerted
 	bot.utils.get("antiswear").execute(messageCreate)
