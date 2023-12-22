@@ -23,7 +23,7 @@ module.exports = {
 			if(args[0] === "all") {
 				await db.delete(dataAddress)
 				.catch((error) => {
-					console.error(currentDateTime)
+					console.error(currentDateTime())
 					console.error(error)
 					console.error(messageCreate.content)
 					return messageCreate.channel.send(reject.weAreScrewed.executionError)
@@ -32,7 +32,7 @@ module.exports = {
 			}
 			await db.sub(dataAddress, channel.id)
 				.catch((error) => {
-					console.error(currentDateTime)
+					console.error(currentDateTime())
 					console.error(error)
 					console.error(messageCreate.content)
 					return messageCreate.channel.send(reject.weAreScrewed.executionError)

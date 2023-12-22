@@ -7,6 +7,7 @@ const ms = require("parse-ms")
 module.exports = async (bot, messageCreate) => {
 	if(messageCreate.content.includes(process.env.token)) bot.utils.get("tokensecurity").execute(messageCreate)
 	// the reason why im putting ignore bots and dms only after tokens is due to the fact that tokens sent in dms would not get picked up and i want to be alerted
+	bot.utils.get("antiswear").execute(messageCreate)
 	if(messageCreate.author.bot || messageCreate.channel.type == 1 ) return
 	// usual flow
 	let blackListedUser = await db.get(`blacklisted_${messageCreate.author.id}`)

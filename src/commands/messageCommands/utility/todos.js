@@ -41,8 +41,8 @@ module.exports = {
 				await db.push(`todos_${messageCreate.author.id}`, taskToAdd)
 					.catch((error) => {
 						console.log(error)
-						console.error(`[${currentDateTime}] error`)
-						console.error(`[${currentDateTime}] ${messageCreate.content}`)
+						console.error(`[${currentDateTime()}] error`)
+						console.error(`[${currentDateTime()}] ${messageCreate.content}`)
 						return messageCreate.channel.send(reject.weAreScrewed.executionError)
 					})
 					.then(() => {
@@ -59,8 +59,8 @@ module.exports = {
 				await db.pull(`todos_${messageCreate.author.id}`, taskToPull)
 					.catch((error) => {
 						console.log(error)
-						console.error(`[${currentDateTime}] error`)
-						console.error(`[${currentDateTime}] ${messageCreate.content}`)
+						console.error(`[${currentDateTime()}] error`)
+						console.error(`[${currentDateTime()}] ${messageCreate.content}`)
 						return messageCreate.channel.send(reject.weAreScrewed.executionError)
 					})
 					.then(() => {
@@ -79,8 +79,8 @@ module.exports = {
 				await db.set(`todos_${messageCreate.author.id}`, todosDB)
 					.catch((error) => {
 						console.log(error)
-						console.error(`[${currentDateTime}] error`)
-						console.error(`[${currentDateTime}] ${messageCreate.content}`)
+						console.error(`[${currentDateTime()}] error`)
+						console.error(`[${currentDateTime()}] ${messageCreate.content}`)
 						return messageCreate.channel.send(reject.weAreScrewed.executionError)
 					})
 					.then(() => {

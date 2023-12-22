@@ -1,4 +1,4 @@
-global.currentDateTime = function currentDateTime() {
+global.currentDateTime = function currentDateTime(setting) {
 	const dateObject = new Date()
 	const formattedDate = [
 		dateObject.getDate().toString().padStart(2, "0"),
@@ -8,6 +8,7 @@ global.currentDateTime = function currentDateTime() {
 		dateObject.getMinutes().toString().padStart(2, "0"),
 		dateObject.getSeconds().toString().padStart(2, "0")
 	].join("-")
+	if(setting === "timeOnly") return `${formattedDate}`
 	return `[time: ${formattedDate}]`
 	// returns the exact time data, i was tryna avoid using an external package to do this.
 }
