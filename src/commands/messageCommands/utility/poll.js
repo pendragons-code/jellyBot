@@ -8,7 +8,7 @@ module.exports = {
 	utilisation: "poll <number of emojis> <emojis [scalable]> <words here>\npoll 5 🙂 🔗 👍 🔥 😭 Which emoji here do you all like most?",
 	desc: "Initiates polls with specified fields!",
 	async execute(messageCreate, args, prefix) {
-		if(args[2]) return messageCreate.channel.send(reject.userFault.args.invalid)
+		if(!args[2]) return messageCreate.channel.send(reject.userFault.args.missing)
 		if(isNaN(args[0])) return messageCreate.channel.send(reject.userFault.nambers.invalid)
 		if(parseInt(args[0]) < 1) return messageCreate.channel.send(reject.userFault.numbers.invalid)
 		let embed = new EmbedBuilder()
