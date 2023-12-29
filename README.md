@@ -1,3 +1,7 @@
+# Add the bot!!!
+Add the bot [here](https://jellypan.club)!
+
+
 # Jellypan
 
 A badly written bot made with discord.js. Why is it badly written? Honestly because im not using things like classes (for example) and stuff like that to simplify a lot of things.           
