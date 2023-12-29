@@ -4,6 +4,7 @@
   "description": "",
   "main": "./src/loaders/bot.js",
   "scripts": {
+    "deployVanilla": "export NODE_ENV=production && node . --max-old-space-size=1024 >> log-file.txt 2>> err-file.txt & exit",
     "deploy": "pm2 start ecosystem.config.js --env production",
     "dev": "export NODE_ENV=dev && nodemon ."
   },

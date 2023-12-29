@@ -13,9 +13,7 @@ module.exports = {
 		if(!args[1]) return messageCreate.channel.send(reject.userFault.args.missing)
 		if(isNaN(args[1]) && args[1] !== "all") return messageCreate.channel.send(reject.userFault.args.invalid)
 		let channel = messageCreate.guild.channels.cache.get(args[1]) // we want this here so we don't have an invalid channel being selected instead
-		if(args[1] !== "all") {
-			if(!channel || channel.type !== 0 || channel.guild.id !== messageCreate.guild.id) return messageCreate.channel.send(reject.userFault.args.invalid)
-		}
+		if(args[1] !== "all") if(!channel || channel.type !== 0 || channel.guild.id !== messageCreate.guild.id) return messageCreate.channel.send(reject.userFault.args.invalid)
 		let dataAddress = `cooldown_${messageCreate.guild.id}`
 		if(args[0] === "clear") {
 			let clearValidation = await db.get(dataAddress)

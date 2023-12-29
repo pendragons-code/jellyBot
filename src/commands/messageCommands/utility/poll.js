@@ -19,7 +19,7 @@ module.exports = {
 		embed.setDescription(`${args.slice(parseInt(args[0]) + 1).join(" ")}`)
 		messageCreate.channel.send({ embeds: [embed] })
 		.then(embedMessage => {
-			while(i < parseInt(args[0])) {
+			for(let i = 0; i < parseInt(args[0]); ++i) {
 				embedMessage.react(args[i+1])
 				.catch((error) => {
 					console.error(error)
