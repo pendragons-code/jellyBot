@@ -6,21 +6,22 @@ module.exports = {
 	name: "lyrics",
 	aliases: [],
 	category: "utility",
-	utilisation: "lyrics <here> <query>",
+	utilisation: "lyrics <query>",
 	desc: "Sends the lyrics or link in the current channel!",
 	async execute(messageCreate, args, prefix) {
 		let results = await axios({
 			method: "get",
-			url: `https://some-random-api.ml/lyrics/title?=${args.join("%20")}`,
+			url: `https://some-random-api.com/lyrics?title=${args.join("%20")}`,
 			headers: {
-				"Content-Type": "application/json",
-				"Accept-Encoding": "gzip,deflate,compress"
+				"Content-Type": "application/json"
 			}
 		})
-		if(!results.links.genius) return messageCreate.channel.send(reject.weAreScrewed.badApiResponse)
+		console.log(args.join("%20"))
+		console.log(results.data)
+		if(!results.data.links) return messageCreate.channel.send(reject.weAreScrewed.badApiResponse)
 		if(results.data.error) return messageCreate.channel.send(reject.weAreScrewed.badApiResponse)
 		let musicLyricsEmbed = new EmbedBuilder()
-		musicLyricsEmbed.setURL(results.link.genius)
+		musicLyricsEmbed.setURL(results.data.links.genius)
 		musicLyricsEmbed.setFooter({ text: defaults.defaultFooterText })
 		musicLyricsEmbed.setColor(defaults.defaultEmbedColor)
 		musicLyricsEmbed.setTimestamp()
@@ -29,7 +30,7 @@ module.exports = {
 		musicLyricsEmbed.setTitle(`Results for ${results.data.title}`)
 		messageCreate.channel.send({ embeds: [musicLyricsEmbed] }).catch(() => {
 			messageCreate.channel.send("Too many characters, sending link instead!")
-			messageCreate.channel.send(`🔗 ${results.data.link.genius}`)
+			messageCreate.channel.send(`🔗 ${results.data.links.genius}`)
 		})
 	}
 }
