@@ -44,3 +44,5 @@ module.exports = {
 		return messageCreate.channel.send({ Embeds: [coolDownEmbed] })
 	}
 }
+
+// so the reason why we built 2 separate was because i already made the cooldown command quite wonky and adding the viewing mechanic would make things more wonkier than it already is.

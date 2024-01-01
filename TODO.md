@@ -8,6 +8,8 @@
 	[.] To begin with this project was not really well made and the whole infrastructure really sucks
 [.] optimization
 	[.] start small i guess
+    [.] clean up code here and there
+    [.] put error handling at where that matters
 ```
 
 # Commands
@@ -16,5 +18,3 @@
 [.] slashCommand utilities will probably have to stay behind a bit, this is due to the limitations of time primarily
 
 ```
-
-i need /frac{1}/{2}
