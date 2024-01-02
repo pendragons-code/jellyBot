@@ -11,7 +11,7 @@ module.exports = {
 	aliases: [],
 	category: "moderation",
 	minPerms: [PermissionsBitField.Flags.KickMembers, PermissionsBitField.Flags.BanMembers],
-	utiliastion: "antiswear <punishment> <list/kick/ban/warn/mute>\nantiswear <wordlist> <remove/add/list/default> <word>\nantiswear <settings> <on/off>",
+	utiliastion: "antiswear <punishment> <list/kick/ban/warn/mute>\nantiswear <wordlist> <remove/add/list/default> <word>\nantiswear <settings> <on/off>\nantiswear <channel> <excludeall/includeall/include/exclude> <channelid>",
 	desc: "Settings for antiswear meachnism.",
 	maxArgs: 3,
 	async execute(messageCreate, args, prefix) {
@@ -42,7 +42,7 @@ module.exports = {
 				const wordList = await db.get(`wordlist_${messageCreate.guild.id}`)
 				switch(args[1]) { // i tried avoiding this but ye
 					case "remove":
-						if(wordList === null || wordList.length < 1) return messageCreate.channel.send("Your wordlist is empty.")
+						if(wordList === null || wordList.length < 1) return messageCreate.channel.send("Your wordlist is empty. We will assume the defaults.")
 						if(!wordList.include(args[1])) return messageCreate.channel.send(reject.userFault.args.invalid)
 						await db.pull(`wordlist_${messageCreate.guild.id}`, args[1])
 						.catch((error) => {
@@ -68,15 +68,20 @@ module.exports = {
 						break
 
 					case "default":
-						await db.delete(`wordList_${messageCreate.channel.id}`)
+						await db.delete(`wordlist_${messageCreate.guild.id}`)
+						await db.set(`wordlist_${messageCreate.guild.id}`, bannedWords)
 						.catch((error) => {
 							console.error(currentDateTime())
 							console.error(error)
 							return messageCreate.channel.send(reject.weAreScrewed.executionError)
 						})
 						.then(() => {
-							return messageCreate.channel.send("")
+							return messageCreate.channel.send("Word list has been reset")
 						})
+						break
+
+					case "list":
+						await db.get(`worldlist_${messageCreate.guild.id}`)
 						break
 
 					default:
@@ -85,6 +90,9 @@ module.exports = {
 				break
 
 			case "settings":
+				break
+
+			case "channel":
 				break
 		}
 	}
